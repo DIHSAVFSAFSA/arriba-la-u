@@ -14,14 +14,19 @@
         <nav id="main-nav">
             <ul>
                 <li><a href="login.html"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="#insignias"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                <li><a href="#estadisticas"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
                 <li><a href="perfil.html"><i class="fas fa-user"></i> Perfil</a></li>
             </ul>
         </nav>
     </header>
 
+    <div id="menu-overlay"></div>
+
     <main class="container">
         <section class="profile-info-section card">
+            <div class="profile-avatar">
+                <img src="https://via.placeholder.com/100/CCCCCC/FFFFFF?text=👤" alt="Avatar de Usuario">
+            </div>
             <h2 class="profile-name">Nombre de Usuario</h2>
             <p class="profile-email"><strong>Correo:</strong> usuario@example.com</p>
             <p class="profile-connected-days"><strong>Días Conectado:</strong> 365</p>
@@ -60,13 +65,13 @@
 
         <section class="share-section card">
             <h2>Comparte tus Logros</h2>
-            <button class="share-button facebook-button">
+            <button class="share-button facebook-button" id="shareFacebookBtn">
                 <i class="fab fa-facebook"></i> Compartir en Facebook
             </button>
-            <button class="share-button whatsapp-button">
+            <button class="share-button whatsapp-button" id="shareWhatsappBtn">
                 <i class="fab fa-whatsapp"></i> Compartir en WhatsApp
             </button>
-            <button class="share-button instagram-button">
+            <button class="share-button instagram-button" id="shareInstagramBtn">
                 <i class="fab fa-instagram"></i> Compartir en Instagram
             </button>
         </section>
