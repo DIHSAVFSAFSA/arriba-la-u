@@ -682,7 +682,7 @@ footer a svg {
         transform: scale(0.95);
         background-color: rgba(128, 128, 128, 0.562);
     }
-@media (max-width: 400px){
+@media (max-width: 460px){
     .caja_habito img{
         max-width: 220px;
         justify-content: center;
