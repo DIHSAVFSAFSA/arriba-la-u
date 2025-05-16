@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f7fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.login-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 320px;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+.login-box input {
+    display: flex;
+    justify-self: center;
+    gap: 10px;
+    width: 70%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #592099;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background-color: #6b24ad;
+}
+
+.register-box{
+    display: none;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 320px;    
+}
+.register-box h2{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.register-box input{
+    display: flex;
+    justify-self: center;
+    gap: 10px;
+    width: 70%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.register-box button{
+    width: 100%;
+    padding: 10px;
+    background-color: #592099;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.register-box button:hover{
+    background-color: #6b24ad;
+}
+
+footer {
+    background-color: #9e25d6;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+}
+
+footer .titulo-app p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+footer .description p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+footer .copyright {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+footer .social-links {
+    margin-top: 10px;
+}
+
+footer .social-links a img {
+    width: 24px;
+    height: 24px;
+    margin: 0 8px;
+    filter: brightness(0) invert(1);
+}
