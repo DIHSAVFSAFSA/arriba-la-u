@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.css">
-    <title>inicio sesión - habito trackerx</title>
+    <title>Inicio de Sesión - Hábito Tracker</title>
 </head>
 <body>
     <main class="login-container">
@@ -13,24 +13,26 @@
             <form id="loginForm">
                 <input type="email" id="login-email" placeholder="Email" required>
                 <input type="password" id="login-password" placeholder="Contraseña" required>
-                <p>¿no tienes una cuenta? <a href="" id="registrarse">registrarse</a></p>
-                <button type="submit" id="login">Ingresar</button>
-            </form>
+                <p>¿No tienes una cuenta? <a href="#" id="showRegister">Registrarse</a></p>
+                <button type="submit" id="login-button">Ingresar</button>
+                <div id="login-message" class="message"></div> </form>
         </section>
+
         <section class="register-box">
             <h2>Registrarse</h2>
-            <form action="" id="registerForm">
-                <input type="text" id="register-nombre" placeholder="nombre de usuario">
-                <input type="email" id="register-email" placeholder="Email">
-                <input type="password" id="register-password" placeholder="contraseña">
-                <p>¿ya tienes una cuenta registrada?<a href="" id="login">logearse</a></p>
-                <button type="submit" id="register">registrarse</button>
-            </form>
+            <form id="registerForm">
+                <input type="text" id="register-nombre" placeholder="Nombre de usuario" required>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Contraseña" required>
+                 <p>¿Ya tienes una cuenta registrada?<a href="#" id="showLogin">Logearse</a></p>
+                <button type="submit" id="register-button">Registrarse</button>
+                 <div id="register-message" class="message"></div> </form>
         </section>
     </main>
+
     <footer>
         <div class="titulo-app">
-            <p>Habito Tracker</p>
+            <p>Hábito Tracker</p>
         </div>
         <div class="description">
             <p>Tu camino hacia mejores hábitos diarios.</p>
@@ -39,11 +41,12 @@
             <p>&copy; 2025 <a href="index.html">HabitoTracker.</a> Todos los derechos reservados.</p>
         </div>
         <div class="social-links">
-            <a href="#"><img src="/img/Facebook_Logo_2023.png" alt="Facebook"></a>
-            <a href="#"><img src="/img/Logo_of_Twitter.svg.png" alt="Twitter"></a>
-            <a href="#"><img src="/img/instagram.webp" alt="Instagram"></a>
+            <a href="#"><img src="img/Facebook_Logo_2023.png" alt="Facebook"></a>
+            <a href="#"><img src="img/Logo_of_Twitter.svg.png" alt="Twitter"></a>
+            <a href="#"><img src="img/instagram.webp" alt="Instagram"></a>
         </div>
     </footer>
+
     <script src="main.js"></script>
 </body>
 </html>
