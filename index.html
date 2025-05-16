@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>HábitoTracker</title>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-list-check"></i> HábitoTracker</h1>
+        <button id="menu-toggle" aria-label="Abrir menú">☰</button>
+        <nav id="main-nav">
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="/Estadísticas"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                <li><a href="/Perfil"><i class="fas fa-user"></i> Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="Progreso_semanal" id="progreso_semanal">
+            <div class="container">
+                <div class="calendar" id="calendar"></div>
+                <div class="activities">
+                    <h3>Actividades para <span id="selected-date">---</span></h3>
+                    <ul id="activities-list"></ul>
+                    <div class="activities-add">
+                        <input id="activity-input" type="text" placeholder="Nueva actividad">
+                        <button id="add-activity">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height: 7px;"></div>
+        </main>
+    <div id="menu-overlay"></div>
+    <div class="badges-panel">
+ <h2>Tus Insignias</h2>
+ <div class="badges-grid">
+  <div class="badge-item" >
+   <div class="badge-icon">🔥</div>
+   <h3>Racha Prendida x7</h3>
+  </div>
+  <div class="badge-item" >
+   <div class="badge-icon">⭐</div>
+   <h3>SuperStar</h3>
+  </div>
+  <div class="badge-item incomplete" >
+   <div class="badge-icon">🏅</div>
+   <h3>Principiante día 1</h3>
+  </div>
+  <div class="badge-item incomplete">
+   <div class="badge-icon">🏆</div>
+   <h3>Fierrero 60 días</h3>
+  </div>
+ </div>
+</div>
+ </div>
+ </div>
+<div class="share-panel">
+ <h2>Comparte tus Logros</h2>
+ <div class="share-buttons">
+  <button id="shareFacebookBtn" class="facebook-share">
+   <i class="fab fa-facebook-f"></i>
+   <span>Compartir en Facebook</span>
+  </button>
+  <button id="shareInstagramBtn" class="instagram-share">
+   <i class="fab fa-instagram"></i>
+   <span>Compartir en Instagram</span>
+  </button>
+  <button id="shareWhatsappBtn" class="whatsapp-share">
+   <i class="fab fa-whatsapp"></i>
+   <span>Compartir por WhatsApp</span>
+  </button>
+ </div>
+</div>
+    <footer>
+        <p>&copy; 2023 HábitoTracker. Todos los derechos reservados.</p>
+        <address>
+            <p><i class="fas fa-envelope"></i> Contacto: <a href="mailto:info@HábitoTracker.com">info@HábitoTracker.com</a></p>
+        </address>
+        <ul>
+            <li><a href="/privacidad"><i class="fas fa-shield-alt"></i> Política de Privacidad</a></li>
+            <li><a href="/terminos"><i class="fas fa-file-alt"></i> Términos de Uso</a></li>
+        </ul>
+    </footer>
+    <script src="script.js"></script>
+
+</body>
+</html>
