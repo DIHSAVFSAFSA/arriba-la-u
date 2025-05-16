@@ -1,0 +1,197 @@
+/* Reseteo básico y estilos del cuerpo */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f0f2f5; /* Fondo gris claro */
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    padding: 20px;
+    max-width: 600px; /* Limita el ancho para simular una vista móvil */
+    margin: 0 auto;
+}
+
+/* Estilos del encabezado */
+.header {
+    background-color: #58cc02; /* Verde vibrante (similar a Duolingo) */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+/* Controla la posición de los elementos en el encabezado */
+.header-left {
+    flex-grow: 1; /* Empuja el contenido hacia la derecha */
+    text-align: left;
+}
+
+.header-right {
+    flex-grow: 1; /* Permite que el icono de la derecha se mueva al extremo derecho */
+    text-align: right;
+}
+
+.header .fas {
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 5px; /* Para hacer click más fácil */
+}
+
+/* Estilos generales para las secciones (tarjetas) */
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+    color: #333;
+    font-size: 1.25em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.profile-info-section {
+    text-align: center; /* Centra el avatar y el texto */
+    padding-top: 30px; /* Más espacio en la parte superior de la tarjeta */
+    padding-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    overflow: hidden; /* Asegura que la imagen no se salga del círculo */
+    margin: 0 auto 15px auto; /* Centra y añade espacio debajo */
+    border: 3px solid #58cc02; /* Borde verde alrededor del avatar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra todo el espacio sin distorsionarse */
+}
+
+.profile-name {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.profile-email,
+.profile-connected-days,
+.profile-bio {
+    color: #666;
+    font-size: 1em;
+    margin-top: 5px;
+    margin-bottom: 5px; /* Espacio entre las líneas de información */
+}
+
+/* Sección de Insignias */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Cuadrícula responsiva */
+    gap: 20px;
+    justify-items: center;
+    text-align: center;
+}
+
+.badge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.badge-icon {
+    width: 80px; /* Tamaño del círculo de la insignia */
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.badge-icon .icon-emoji {
+    font-size: 3em; /* Tamaño del emoji para simular el ícono */
+}
+
+/* Colores específicos de las insignias */
+.badge-racha {
+    background-color: #ff9200; /* Naranja */
+}
+.badge-star {
+    background-color: #ff9200; /* Naranja */
+}
+.badge-principiante {
+    background-color: #c0c0c0; /* Gris/Plata */
+}
+.badge-fierrero {
+    background-color: #FFD700; /* Dorado */
+}
+
+.badge-item p {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Sección para Compartir Logros */
+.share-section .share-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px; /* Espacio entre los botones de compartir */
+}
+
+/* Colores específicos para cada botón de compartir */
+.share-section .facebook-button {
+    background-color: #3b5998; /* Azul de Facebook */
+    color: white;
+}
+.share-section .facebook-button:hover {
+    background-color: #2a4884;
+}
+
+.share-section .whatsapp-button {
+    background-color: #25D366; /* Verde de WhatsApp */
+    color: white;
+}
+.share-section .whatsapp-button:hover {
+    background-color: #1DA851;
+}
+
+.share-section .instagram-button {
+    /* Gradiente de Instagram para simular su logo */
+    background-image: linear-gradient(to right, #833AB4, #FD1D1D, #FEDA77);
+    color: white;
+}
+.share-section .instagram-button:hover {
+    opacity: 0.9;
+}
