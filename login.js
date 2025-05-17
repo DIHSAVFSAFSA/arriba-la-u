@@ -1,150 +1,142 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- PASO 1: ¿Se está cargando y ejecutando el script? ---
-    console.log('LOG 1: DOM cargado y login.js iniciado.');
-
+    const loginLink = document.getElementById('showLogin');
+    const registerLink = document.getElementById('showRegister');
     const loginBox = document.querySelector('.login-box');
     const registerBox = document.querySelector('.register-box');
-    const showRegisterLink = document.getElementById('showRegister');
-    const showLoginLink = document.getElementById('showLogin');
+
+    // Forms and messages
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
     const loginMessage = document.getElementById('login-message');
     const registerMessage = document.getElementById('register-message');
 
-    // --- PASO 2: ¿Está encontrando todos los elementos HTML? ---
-    console.log('LOG 2: Elementos HTML seleccionados:');
-    console.log('  loginBox:', loginBox);
-    console.log('  registerBox:', registerBox);
-    console.log('  showRegisterLink:', showRegisterLink);
-    console.log('  showLoginLink:', showLoginLink);
-    console.log('  loginForm:', loginForm);
-    console.log('  registerForm:', registerForm);
+    // Function to show messages
+    function showMessage(element, type, message) {
+        element.textContent = message;
+        element.className = 'message ' + type; // 'message success' or 'message error'
+        element.style.display = 'block';
+    }
 
-    // Si algún elemento no se encuentra, verás 'null' en la consola y estas advertencias.
-    if (!loginBox) console.warn('ADVERTENCIA: .login-box no encontrado.');
-    if (!registerBox) console.warn('ADVERTENCIA: .register-box no encontrado.');
-    if (!showRegisterLink) console.warn('ADVERTENCIA: #showRegister no encontrado.');
-    if (!showLoginLink) console.warn('ADVERTENCIA: #showLogin no encontrado.');
-    if (!loginForm) console.warn('ADVERTENCIA: #loginForm no encontrado.');
-    if (!registerForm) console.warn('ADVERTENCIA: #registerForm no encontrado. ¡Problema potencial para el registro!');
+    // Toggle between login and register forms
+    if (loginLink) {
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('LOG 1: Clic en "Logearse" (enlace). Cambiando a form de login.');
+            if (registerBox) registerBox.style.display = 'none';
+            if (loginBox) loginBox.style.display = 'block';
+            if (loginMessage) loginMessage.style.display = 'none';
+            if (registerMessage) registerMessage.style.display = 'none'; // Oculta mensajes al cambiar de form
+        });
+    }
 
-    // Visibilidad inicial (CSS ya lo hace, JS lo refuerza)
-    if (loginBox) loginBox.style.display = 'block';
-    if (registerBox) registerBox.style.display = 'none';
-
-    // Event listener para mostrar formulario de registro
-    if (showRegisterLink) {
-        showRegisterLink.addEventListener('click', (e) => {
+    if (registerLink) {
+        registerLink.addEventListener('click', (e) => {
             e.preventDefault();
             console.log('LOG 3: Clic en "Registrarse" (enlace). Cambiando a form de registro.');
             if (loginBox) loginBox.style.display = 'none';
             if (registerBox) registerBox.style.display = 'block';
-            if (loginMessage) loginMessage.style.display = 'none';
+            if (loginMessage) loginMessage.style.display = 'none'; // Oculta mensajes al cambiar de form
             if (registerMessage) registerMessage.style.display = 'none';
-            if (registerForm) registerForm.reset();
         });
     }
 
-    // Event listener para mostrar formulario de login
-    if (showLoginLink) {
-        showLoginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log('LOG 4: Clic en "Logearse" (enlace). Cambiando a form de login.');
-            if (registerBox) registerBox.style.display = 'none';
-            if (loginBox) loginBox.style.display = 'block';
-            if (loginMessage) loginMessage.style.display = 'none';
-            if (registerMessage) registerMessage.style.display = 'none';
-            if (loginForm) loginForm.reset();
-        });
-    }
-
-    // Función para mostrar mensajes
-    function showMessage(element, type, text) {
-        if (element) {
-            element.textContent = text;
-            element.className = 'message ' + type;
-            element.style.display = 'block';
-            console.log(`LOG: Mensaje para ${element.id || element.className}: ${text} (${type})`);
-        }
-    }
-
-    // Envío de Formulario de Login
+    // Login Form Submission (example, adjust as needed for your login logic)
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log('LOG 5: Formulario de login ENVIADO (se llamó preventDefault).');
+            console.log('LOG 2: Formulario de login ENVIADO (se llamó preventDefault).');
             if (loginMessage) loginMessage.style.display = 'none';
 
             const email = loginForm['login-email'].value;
             const password = loginForm['login-password'].value;
 
+            // Simple client-side validation
             if (!email || !password) {
-                showMessage(loginMessage, 'error', 'Por favor, introduce email y contraseña.');
+                showMessage(loginMessage, 'error', 'Por favor, introduce tu email y contraseña.');
                 return;
             }
 
             try {
-                // *** CAMBIO AQUÍ: Usando HTTPS ***
-                const targetUrlLogin = 'https://ssenatinogaaaa.lovestoblog.com/login_user.php';
+                // *** IMPORTANTE: AJUSTA ESTA URL A TU SCRIPT DE LOGIN EN INFINITYFREE ***
+                const targetUrlLogin = 'https://your_login_script.lovestoblog.com/login_user.php'; // Cambia esto si tienes un script de login
+                
+                // Construir los datos como URLSearchParams para enviar como x-www-form-urlencoded
+                const formData = new URLSearchParams();
+                formData.append('email', email);
+                formData.append('password', password);
+
                 const response = await fetch(targetUrlLogin, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    // NO ES NECESARIO ESPECIFICAR Content-Type para URLSearchParams, fetch lo hace automáticamente
+                    body: formData 
                 });
 
-                const data = await response.json();
-                console.log('LOG: Respuesta de login_user.php:', data);
+                const data = await response.json(); // Espera JSON como respuesta del servidor
+                console.log('LOG: Respuesta del servidor de login:', data);
 
                 if (response.ok && data.success) {
-                    showMessage(loginMessage, 'success', 'Inicio de sesión exitoso. Redirigiendo...');
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1000);
+                    showMessage(loginMessage, 'success', 'Inicio de sesión exitoso. ¡Bienvenido!');
+                    // Redirigir o realizar otra acción post-login
                 } else {
-                    showMessage(loginMessage, 'error', data.message || 'Error en el inicio de sesión.');
+                    showMessage(loginMessage, 'error', data.message || 'Error en el inicio de sesión. Credenciales incorrectas.');
                 }
             } catch (error) {
                 console.error('ERROR: Error durante el inicio de sesión (catch):', error);
-                showMessage(loginMessage, 'error', 'Ocurrió un error de red o el servidor no respondió correctamente. Inténtalo de nuevo.');
+                showMessage(loginMessage, 'error', 'Ocurrió un error de red o el servidor no respondió con un JSON válido. Revisa la Consola para más detalles.');
             }
         });
     }
 
-    // Envío de Formulario de Registro
+    // Register Form Submission
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             console.log('LOG 6: Formulario de registro ENVIADO (se llamó preventDefault).');
             if (registerMessage) registerMessage.style.display = 'none';
-            
-            const username = document.getElementById('register-nombre').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
 
-            // ----------------------------
+            const username = registerForm['register-nombre'].value;
+            const email = registerForm['register-email'].value;
+            const password = registerForm['register-password'].value;
+
+            // DEBUGGING: Log collected values
+            console.log('DEBUG - Valores recogidos por JS antes de enviar:');
+            console.log('Username:', username);
+            console.log('Email:', email);
+            console.log('Password:', password);
+
             if (!username || !email || !password) {
                 showMessage(registerMessage, 'error', 'Por favor, completa todos los campos.');
                 return;
             }
 
+            // --- CAMBIO CLAVE AQUÍ: Usamos URLSearchParams para enviar datos como formulario ---
+            const formData = new URLSearchParams();
+            formData.append('username', username);
+            formData.append('email', email);
+            formData.append('password', password);
+            // ---------------------------------------------------------------------------------
+
             try {
-                console.log('LOG: Intentando fetch a register_user.php...');
-                // *** CAMBIO AQUÍ: Usando HTTPS ***
-                const targetUrlRegister = 'https://ssenatinogaaaa.lovestoblog.com/register_user.php';
+                console.log('LOG: Intentando fetch a register_user.php con URLSearchParams...');
+                // *** ASEGÚRATE QUE ESTA URL ES CORRECTA PARA TU register_user.php EN INFINITYFREE ***
+                const targetUrlRegister = 'https://ssenatinogaaaa.lovestoblog.com/register_user.php'; 
+                
                 const response = await fetch(targetUrlRegister, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, email, password })
+                    // ¡IMPORTANTE! NO ES NECESARIO ESPECIFICAR Content-Type: 'application/json'
+                    // fetch lo maneja automáticamente para URLSearchParams como application/x-www-form-urlencoded
+                    body: formData // Envía el objeto URLSearchParams directamente
                 });
                 console.log('LOG: Fetch a register_user.php completado.');
 
-                const data = await response.json();
+                const data = await response.json(); // La respuesta del servidor seguirá siendo JSON
                 console.log('LOG: Respuesta de register_user.php:', data);
 
                 if (response.ok && data.success) {
                     showMessage(registerMessage, 'success', 'Registro exitoso. ¡Ahora puedes iniciar sesión!');
                     if (registerForm) registerForm.reset();
                 } else {
+                    // Muestra el mensaje de error del servidor si lo hay
                     showMessage(registerMessage, 'error', data.message || 'Error en el registro. Inténtalo de nuevo.');
                 }
             } catch (error) {
