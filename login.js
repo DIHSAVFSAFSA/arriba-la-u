@@ -94,9 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('LOG 6: Formulario de registro ENVIADO (se llamó preventDefault).');
             if (registerMessage) registerMessage.style.display = 'none';
 
-            const username = registerForm['register-nombre'].value;
-            const email = registerForm['register-email'].value;
-            const password = registerForm['register-password'].value;
+            const username = registerForm['username'].value;
+            const email = registerForm['email'].value;
+            const password = registerForm['password'].value;
+
 
             // DEBUGGING: Log collected values
             console.log('DEBUG - Valores recogidos por JS antes de enviar:');
