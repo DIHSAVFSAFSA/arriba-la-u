@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                // *** CAMBIO AQUÍ: Usando HTTPS ***
+                // *** CAMBIO AQUÍ: Usando HTTP ***
                 const targetUrlLogin = 'https://ssenatinogaaaa.lovestoblog.com/login_user.php';
                 const response = await fetch(targetUrlLogin, {
                     method: 'POST',
