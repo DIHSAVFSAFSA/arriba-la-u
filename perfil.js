@@ -1,104 +1,128 @@
-document.addEventListener('DOMContentLoaded', function() {
+// perfil.js
+document.addEventListener('DOMContentLoaded', async function() {
+    // Verificar si hay un usuario logueado
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    // --- Variables Globales ---
+    if (!currentUser || !currentUser.id) {
+        // Si no hay usuario, redirigir al login
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Obtener elementos HTML para mostrar el perfil
+    const profileName = document.querySelector('.profile-name');
+    const profileEmail = document.querySelector('.profile-email strong'); // Ajusta el selector
+    const profileConnectedDays = document.querySelector('.profile-connected-days strong'); // Ajusta el selector
+    const profileBio = document.querySelector('.profile-bio');
+    const badgesGrid = document.querySelector('.badges-grid');
+
+    // Función para cargar datos del perfil
+    async function loadUserProfile(userId) {
+        try {
+            const response = await fetch(`http://tu-dominio-infinityfree.com/get_user_profile.php?user_id=${userId}`);
+            const data = await response.json();
+
+            if (data.success) {
+                const user = data.data;
+                profileName.textContent = user.username || 'Usuario Desconocido';
+                profileEmail.textContent = 'Correo: ' + (user.email || 'N/A');
+                profileConnectedDays.textContent = 'Días Conectado: ' + (user.days_connected || 0);
+                profileBio.textContent = user.bio || 'Sin biografía.';
+            } else {
+                console.error("Error al cargar perfil:", data.message);
+                profileName.textContent = 'Error al cargar perfil';
+                profileEmail.textContent = '';
+                profileConnectedDays.textContent = '';
+                profileBio.textContent = '';
+            }
+        } catch (error) {
+            console.error('Error de red o API al cargar perfil:', error);
+            profileName.textContent = 'Error de conexión';
+        }
+    }
+
+    // Función para cargar las insignias del usuario
+    async function loadUserBadges(userId) {
+        try {
+            const response = await fetch(`http://tu-dominio-infinityfree.com/get_user_badges.php?user_id=${userId}`);
+            const data = await response.json();
+
+            badgesGrid.innerHTML = ''; // Limpiar insignias existentes
+
+            if (data.success && data.data.length > 0) {
+                data.data.forEach(badge => {
+                    const badgeItem = document.createElement('div');
+                    badgeItem.classList.add('badge-item');
+
+                    const badgeIcon = document.createElement('div');
+                    badgeIcon.classList.add('badge-icon');
+                    badgeIcon.innerHTML = `<span class="icon-emoji">${badge.icon_emoji || '🏅'}</span>`; // Usa el emoji de la BD
+                    // Puedes añadir clases CSS dinámicamente si tienes estilos para cada tipo de insignia
+                    // badgeIcon.classList.add(`badge-${badge.name.toLowerCase().replace(/\s/g, '-')}`);
+
+                    const badgeName = document.createElement('p');
+                    badgeName.textContent = badge.name; // Nombre de la insignia de la BD
+
+                    badgeItem.appendChild(badgeIcon);
+                    badgeItem.appendChild(badgeName);
+                    badgesGrid.appendChild(badgeItem);
+                });
+            } else {
+                badgesGrid.innerHTML = '<p>Este usuario no tiene insignias todavía.</p>';
+            }
+        } catch (error) {
+            console.error('Error de red o API al cargar insignias:', error);
+            badgesGrid.innerHTML = '<p>Error al cargar las insignias.</p>';
+        }
+    }
+
+    // Cargar datos cuando la página carga
+    await loadUserProfile(currentUser.id);
+    await loadUserBadges(currentUser.id);
+
+
+    // Lógica para el menú hamburguesa (si no la tienes ya en un script global)
     const menuToggle = document.getElementById('menu-toggle');
     const mainNav = document.getElementById('main-nav');
     const menuOverlay = document.getElementById('menu-overlay');
-    const body = document.body;
-
-    // Variables relacionadas con actividades y calendario (pueden no estar en esta página de perfil)
-    // const calendarEl = document.getElementById('calendar');
-    // const selectedDateEl = document.getElementById('selected-date');
-    // const activitiesListEl = document.getElementById('activities-list');
-    // const activityInput = document.getElementById('activity-input');
-    // const addActivityBtn = document.getElementById('add-activity');
-
-    // Botones de Compartir (ahora con IDs específicos)
-    const shareFacebookBtn = document.getElementById('shareFacebookBtn');
-    const shareInstagramBtn = document.getElementById('shareInstagramBtn');
-    const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
-
-    // Lógica para compartir logros (si los botones existen)
-    if (shareFacebookBtn && shareInstagramBtn && shareWhatsappBtn) {
-        const pageUrl = window.location.href;
-        // Obtiene la racha actual (ejemplo, puede venir de una API o localStorage)
-        const currentStreak = parseInt(localStorage.getItem('streakCount') || '0', 10);
-        const shareMessage = `¡He alcanzado una racha de ${currentStreak} días en HábitoTracker! 💪 Mira mis logros aquí: `;
-
-        // Funcionalidad para Compartir en Facebook
-        shareFacebookBtn.addEventListener('click', function() {
-            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
-            window.open(facebookShareUrl, '_blank');
-        });
-
-        // Funcionalidad para Compartir en WhatsApp
-        shareWhatsappBtn.addEventListener('click', function() {
-            const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage + pageUrl)}`;
-            window.open(whatsappShareUrl, '_blank');
-        });
-
-        // Funcionalidad para Compartir en Instagram (Limitaciones Web)
-        shareInstagramBtn.addEventListener('click', function() {
-            alert("Para compartir en Instagram, te recomendamos tomar una captura de pantalla de tus logros y subirla directamente desde la aplicación móvil de Instagram.");
-        });
-
-    } else {
-        console.warn('Error: No se encontraron todos los botones de compartir (Facebook, Instagram, WhatsApp).');
-    }
-
-    // Lógica de menú lateral (hamburguesa)
-    function openMenu() {
-        mainNav.classList.add('open');
-        menuOverlay.classList.add('visible');
-        menuToggle.textContent = '✕'; // Cambia el icono a una 'X'
-        menuToggle.setAttribute('aria-expanded', 'true');
-        body.style.overflow = 'hidden'; // Evita el scroll en el body cuando el menú está abierto
-    }
-
-    function closeMenu() {
-        mainNav.classList.remove('open');
-        menuOverlay.classList.remove('visible');
-        menuToggle.textContent = '☰'; // Vuelve al icono de hamburguesa
-        menuToggle.setAttribute('aria-expanded', 'false');
-        body.style.overflow = ''; // Restablece el scroll del body
-    }
 
     if (menuToggle && mainNav && menuOverlay) {
-        menuToggle.addEventListener('click', function() {
-            if (mainNav.classList.contains('open')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
         });
 
-        // Cerrar menú si se hace clic en el overlay
-        menuOverlay.addEventListener('click', function() {
-            closeMenu();
+        menuOverlay.addEventListener('click', () => {
+            mainNav.classList.remove('active');
+            menuOverlay.classList.remove('active');
         });
-
-        // Cerrar menú si se hace clic en un enlace (útil en móvil)
-        mainNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function() {
-                closeMenu();
-            });
-        });
-
-        // Cerrar menú si se redimensiona la ventana a tamaño de escritorio
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) { // Usar el mismo breakpoint que en el CSS
-                closeMenu();
-            }
-        });
-    } else {
-        console.error('Error: No se encontraron todos los elementos necesarios para el menú (menu-toggle, main-nav o menu-overlay). Asegúrate de que los IDs en el HTML son correctos.');
     }
 
-    // Estas variables y lógica parecen ser de la funcionalidad principal del tracker y no directamente del perfil.
-    // Se mantienen aquí por si se usan en otras partes de tu aplicación.
-    let activities = JSON.parse(localStorage.getItem('activities')) || {};
-    let selectedDate;
-    let streakBadgeH3 = null;
-    const badgeItems = document.querySelectorAll('.badge-item');
+    // Lógica para compartir (si no la tienes ya)
+    const shareFacebookBtn = document.getElementById('shareFacebookBtn');
+    const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
+    const shareInstagramBtn = document.getElementById('shareInstagramBtn');
 
+    const shareText = "¡Estoy usando HábitoTracker para mejorar mis hábitos! ¡Únete!";
+    const shareUrl = "https://tu-pagina-github.github.io/"; // Reemplaza con la URL de tu página de GitHub
+
+    if (shareFacebookBtn) {
+        shareFacebookBtn.addEventListener('click', () => {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`, '_blank');
+        });
+    }
+    if (shareWhatsappBtn) {
+        shareWhatsappBtn.addEventListener('click', () => {
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
+        });
+    }
+    // Instagram no tiene una API de compartir directa para post (solo stories),
+    // puedes simplemente abrir la app y que el usuario suba manualmente o dar un mensaje.
+    if (shareInstagramBtn) {
+        shareInstagramBtn.addEventListener('click', () => {
+            alert('Para compartir en Instagram, puedes hacer una captura de pantalla y subirla manualmente. ¡No olvides etiquetarnos!');
+            // Opcional: Abrir Instagram en una nueva pestaña (no compartirá directamente)
+            // window.open('https://www.instagram.com/', '_blank');
+        });
+    }
 });
