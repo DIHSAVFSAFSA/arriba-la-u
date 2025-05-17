@@ -1,4 +1,4 @@
-// login.js o dentro de un <script> en login.html
+// login.js
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             registerMessage.style.color = 'blue';
 
             try {
-                const response = await fetch('http://tu-dominio-infinityfree.com/register_user.php', {
+                const response = await fetch('https://ssenatinoagaaa.lovestoblog.com/register_user.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, email, password })
@@ -49,8 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     registerMessage.textContent = data.message + ' ¡Ahora puedes iniciar sesión!';
                     registerMessage.style.color = 'green';
-                    // Opcional: Cambiar automáticamente a la vista de login
-                    if (showLoginLink) showLoginLink.click();
+                    if (showLoginLink) showLoginLink.click(); // Cambiar a la vista de login
                 } else {
                     registerMessage.textContent = 'Error: ' + data.message;
                     registerMessage.style.color = 'red';
@@ -74,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loginMessage.style.color = 'blue';
 
             try {
-                const response = await fetch('http://tu-dominio-infinityfree.com/login_user.php', {
+                const response = await fetch('https://ssenatinoagaaa.lovestoblog.com/login_user.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -84,10 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     loginMessage.textContent = data.message;
                     loginMessage.style.color = 'green';
-                    // ¡Importante! Guardar los datos del usuario en localStorage
-                    localStorage.setItem('currentUser', JSON.stringify(data.user));
-                    // Redirigir al perfil o a la página principal
-                    window.location.href = 'perfil.html'; // O 'index.html'
+                    localStorage.setItem('currentUser', JSON.stringify(data.user)); // Guardar datos del usuario
+                    window.location.href = 'perfil.html'; // Redirigir al perfil
                 } else {
                     loginMessage.textContent = 'Error: ' + data.message;
                     loginMessage.style.color = 'red';
@@ -100,15 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Para "Cerrar Sesión" en la navegación:
-    // Asegúrate de que el enlace de cerrar sesión tenga un ID, por ejemplo:
-    // <a href="login.html" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+    // Para "Cerrar Sesión" en la navegación (asumiendo que tiene id="logoutBtn" en tu HTML):
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function(e) {
             localStorage.removeItem('currentUser'); // Elimina los datos del usuario
-            // Opcional: Redirigir explícitamente a login.html si no lo hace el href
-            // window.location.href = 'login.html';
+            // La redirección a login.html ya la debería manejar el 'href' del enlace.
         });
     }
 });
