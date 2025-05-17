@@ -11,15 +11,15 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Obtener elementos HTML para mostrar el perfil
     const profileName = document.querySelector('.profile-name');
-    const profileEmail = document.querySelector('.profile-email strong'); // Ajusta el selector
-    const profileConnectedDays = document.querySelector('.profile-connected-days strong'); // Ajusta el selector
+    const profileEmail = document.querySelector('.profile-email strong');
+    const profileConnectedDays = document.querySelector('.profile-connected-days strong');
     const profileBio = document.querySelector('.profile-bio');
     const badgesGrid = document.querySelector('.badges-grid');
 
     // Función para cargar datos del perfil
     async function loadUserProfile(userId) {
         try {
-            const response = await fetch(`http://tu-dominio-infinityfree.com/get_user_profile.php?user_id=${userId}`);
+            const response = await fetch(`https://ssenatinoagaaa.lovestoblog.com/get_user_profile.php?user_id=${userId}`);
             const data = await response.json();
 
             if (data.success) {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Función para cargar las insignias del usuario
     async function loadUserBadges(userId) {
         try {
-            const response = await fetch(`http://tu-dominio-infinityfree.com/get_user_badges.php?user_id=${userId}`);
+            const response = await fetch(`https://ssenatinoagaaa.lovestoblog.com/get_user_badges.php?user_id=${userId}`);
             const data = await response.json();
 
             badgesGrid.innerHTML = ''; // Limpiar insignias existentes
@@ -56,12 +56,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                     const badgeIcon = document.createElement('div');
                     badgeIcon.classList.add('badge-icon');
-                    badgeIcon.innerHTML = `<span class="icon-emoji">${badge.icon_emoji || '🏅'}</span>`; // Usa el emoji de la BD
-                    // Puedes añadir clases CSS dinámicamente si tienes estilos para cada tipo de insignia
-                    // badgeIcon.classList.add(`badge-${badge.name.toLowerCase().replace(/\s/g, '-')}`);
+                    badgeIcon.innerHTML = `<span class="icon-emoji">${badge.icon_emoji || '🏅'}</span>`;
 
                     const badgeName = document.createElement('p');
-                    badgeName.textContent = badge.name; // Nombre de la insignia de la BD
+                    badgeName.textContent = badge.name;
 
                     badgeItem.appendChild(badgeIcon);
                     badgeItem.appendChild(badgeName);
@@ -98,13 +96,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     }
 
-    // Lógica para compartir (si no la tienes ya)
+    // Lógica para compartir
     const shareFacebookBtn = document.getElementById('shareFacebookBtn');
     const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
     const shareInstagramBtn = document.getElementById('shareInstagramBtn');
 
     const shareText = "¡Estoy usando HábitoTracker para mejorar mis hábitos! ¡Únete!";
-    const shareUrl = "https://tu-pagina-github.github.io/"; // Reemplaza con la URL de tu página de GitHub
+    const shareUrl = "https://ssenatinoagaaa.lovestoblog.com/"; // Reemplaza con la URL de tu página de GitHub
 
     if (shareFacebookBtn) {
         shareFacebookBtn.addEventListener('click', () => {
@@ -116,13 +114,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
         });
     }
-    // Instagram no tiene una API de compartir directa para post (solo stories),
-    // puedes simplemente abrir la app y que el usuario suba manualmente o dar un mensaje.
     if (shareInstagramBtn) {
         shareInstagramBtn.addEventListener('click', () => {
             alert('Para compartir en Instagram, puedes hacer una captura de pantalla y subirla manualmente. ¡No olvides etiquetarnos!');
-            // Opcional: Abrir Instagram en una nueva pestaña (no compartirá directamente)
-            // window.open('https://www.instagram.com/', '_blank');
         });
     }
 });
