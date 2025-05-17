@@ -27,22 +27,26 @@ body {
     width: 100%;
     max-width: 400px; /* Ancho máximo para los formularios */
     text-align: center;
-    /* Por defecto, ambas están ocultas para permitir control con JS. */
-    display: none; 
 }
 
 /* --- ¡AJUSTE CLAVE AQUÍ! --- */
-/* Esta regla asegura que la caja de login SIEMPRE se muestre inicialmente. */
-/* Si quieres que registre el primero, cambia '.login-box' a '.register-box' */
+/* El formulario de login NO tendrá 'display: none' por defecto en CSS. */
+/* Se mostrará automáticamente. */
 .login-box {
-    display: block;
+    /* No poner display: none aquí */
 }
 
+/* El formulario de registro SÍ tendrá 'display: none' por defecto en CSS. */
+.register-box {
+    display: none; 
+}
 
-/* Esta regla se usa junto con el JavaScript para alternar la visibilidad entre formularios */
+/* Estas clases .active se usarán si tu JavaScript las usa para alternar. */
+/* Si tu JS manipula 'style.display' directamente, estas no son estrictamente necesarias, */
+/* pero es bueno tenerlas para consistencia. */
 .login-box.active,
 .register-box.active {
-    display: block; /* Muestra el formulario activo */
+    display: block; /* Cuando JavaScript les añade la clase 'active', se muestran */
 }
 
 h2 {
