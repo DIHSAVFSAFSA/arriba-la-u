@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 // *** CAMBIO AQUÍ: Usando un proxy CORS ***
                 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-                const targetUrlLogin = 'http://ssenatinoagaaa.lovestoblog.com/login_user.php';
+                const targetUrlLogin = 'http://ssenatinoagaaaa.lovestoblog.com/login_user.php';
                 const response = await fetch(proxyUrl + targetUrlLogin, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('LOG: Intentando fetch a register_user.php...'); 
                 // *** CAMBIO AQUÍ: Usando un proxy CORS ***
                 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-                const targetUrlRegister = 'http://ssenatinoagaaa.lovestoblog.com/register_user.php';
+                const targetUrlRegister = 'http://ssenatinoagaaaa.lovestoblog.com/register_user.php';
                 const response = await fetch(proxyUrl + targetUrlRegister, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
