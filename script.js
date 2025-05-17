@@ -57,9 +57,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     async function loadActivitiesForDate(userId, date) {
         activitiesListEl.innerHTML = 'Cargando actividades...';
         try {
-            // Podrías tener un endpoint PHP que obtenga hábitos Y completaciones para una fecha
-            // Por ahora, usaremos get_user_habits.php y asumiremos que luego marcarás la completación
-            const response = await fetch(`http://tu-dominio-infinityfree.com/get_user_habits.php?user_id=${userId}`);
+            const response = await fetch(`https://ssenatinoagaaa.lovestoblog.com/get_user_habits.php?user_id=${userId}`);
             const data = await response.json();
 
             activitiesListEl.innerHTML = ''; // Limpiar antes de añadir
@@ -67,15 +65,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 data.data.forEach(habit => {
                     const li = document.createElement('li');
                     li.textContent = habit.name;
-                    // Aquí podrías añadir un checkbox o botón para "Marcar como completado"
                     const completeButton = document.createElement('button');
                     completeButton.textContent = 'Completar';
                     completeButton.classList.add('complete-btn');
                     completeButton.dataset.habitId = habit.id;
                     completeButton.addEventListener('click', async () => {
                         await recordCompletion(userId, habit.id, date);
-                        // Recargar actividades para ver el cambio (o actualizar UI)
-                        loadActivitiesForDate(userId, date);
+                        loadActivitiesForDate(userId, date); // Recargar actividades
                     });
                     li.appendChild(completeButton);
                     activitiesListEl.appendChild(li);
@@ -101,11 +97,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             user_id: userId,
             name: activityName,
             description: "Hábito añadido desde la app.",
-            frequency: "daily" // O podrías permitir al usuario elegir la frecuencia
+            frequency: "daily"
         };
 
         try {
-            const response = await fetch('http://tu-dominio-infinityfree.com/add_habit.php', {
+            const response = await fetch('https://ssenatinoagaaa.lovestoblog.com/add_habit.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newHabitData)
@@ -134,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         };
 
         try {
-            const response = await fetch('http://tu-dominio-infinityfree.com/record_completion.php', {
+            const response = await fetch('https://ssenatinoagaaa.lovestoblog.com/record_completion.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(completionData)
@@ -157,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const badgesGrid = document.querySelector('.badges-panel .badges-grid');
         badgesGrid.innerHTML = 'Cargando insignias...';
         try {
-            const response = await fetch('http://tu-dominio-infinityfree.com/get_all_badges.php');
+            const response = await fetch('https://ssenatinoagaaa.lovestoblog.com/get_all_badges.php');
             const data = await response.json();
 
             badgesGrid.innerHTML = ''; // Limpiar antes de añadir
@@ -165,8 +161,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 data.data.forEach(badge => {
                     const badgeItem = document.createElement('div');
                     badgeItem.classList.add('badge-item');
-                    // Puedes añadir 'incomplete' si no la tiene el usuario (esto requeriría otra llamada o datos más complejos)
-                    // Por ahora, solo muestra todas las insignias disponibles.
 
                     const badgeIcon = document.createElement('div');
                     badgeIcon.classList.add('badge-icon');
@@ -190,11 +184,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // --- Ejecución Inicial ---
     renderCalendar();
-    // Cargar actividades para la fecha seleccionada por defecto al iniciar
     loadActivitiesForDate(userId, selectedDate.toISOString().split('T')[0]);
-    loadAllBadges(); // Cargar todas las insignias disponibles
+    loadAllBadges();
 
-    // --- Lógica del menú hamburguesa (si no la tienes ya) ---
+    // --- Lógica del menú hamburguesa ---
     const menuToggle = document.getElementById('menu-toggle');
     const mainNav = document.getElementById('main-nav');
     const menuOverlay = document.getElementById('menu-overlay');
