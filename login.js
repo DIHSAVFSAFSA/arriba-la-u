@@ -60,14 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 // *** IMPORTANTE: AJUSTA ESTA URL A TU SCRIPT DE LOGIN EN INFINITYFREE ***
                 const targetUrlLogin = 'https://your_login_script.lovestoblog.com/login_user.php'; // Cambia esto si tienes un script de login
                 
-                // Construir los datos como URLSearchParams para enviar como x-www-form-urlencoded
-                const formData = new URLSearchParams();
+                // Construir los datos como FormData
+                const formData = new FormData(); // ¡CAMBIO AQUÍ!
                 formData.append('email', email);
                 formData.append('password', password);
 
                 const response = await fetch(targetUrlLogin, {
                     method: 'POST',
-                    // NO ES NECESARIO ESPECIFICAR Content-Type para URLSearchParams, fetch lo hace automáticamente
+                    // NO ES NECESARIO ESPECIFICAR Content-Type para FormData, fetch lo hace automáticamente (multipart/form-data)
                     body: formData 
                 });
 
@@ -109,23 +109,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // --- CAMBIO CLAVE AQUÍ: Usamos URLSearchParams para enviar datos como formulario ---
-            const formData = new URLSearchParams();
+            // --- ¡CAMBIO CLAVE AQUÍ: Usamos FormData para enviar datos como un formulario real! ---
+            const formData = new FormData(); // ¡CAMBIO A FormData!
             formData.append('username', username);
             formData.append('email', email);
             formData.append('password', password);
             // ---------------------------------------------------------------------------------
 
             try {
-                console.log('LOG: Intentando fetch a register_user.php con URLSearchParams...');
+                console.log('LOG: Intentando fetch a register_user.php con FormData...');
                 // *** ASEGÚRATE QUE ESTA URL ES CORRECTA PARA TU register_user.php EN INFINITYFREE ***
                 const targetUrlRegister = 'https://ssenatinogaaaa.lovestoblog.com/register_user.php'; 
                 
                 const response = await fetch(targetUrlRegister, {
                     method: 'POST',
-                    // ¡IMPORTANTE! NO ES NECESARIO ESPECIFICAR Content-Type: 'application/json'
-                    // fetch lo maneja automáticamente para URLSearchParams como application/x-www-form-urlencoded
-                    body: formData // Envía el objeto URLSearchParams directamente
+                    // ¡IMPORTANTE! NO ES NECESARIO ESPECIFICAR Content-Type para FormData.
+                    // fetch lo maneja automáticamente como 'multipart/form-data'.
+                    body: formData // Envía el objeto FormData directamente
                 });
                 console.log('LOG: Fetch a register_user.php completado.');
 
