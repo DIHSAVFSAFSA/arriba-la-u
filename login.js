@@ -121,7 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const username = registerForm['register-nombre'].value;
             const email = registerForm['register-email'].value;
             const password = registerForm['register-password'].value;
-
+            // --- ¡AÑADE ESTAS LÍNEAS! ---
+            console.log('DEBUG - Valores antes de enviar:');
+            console.log('Username recogido:', username);
+            console.log('Email recogido:', email);
+            console.log('Password recogido:', password);
+            // ----------------------------
             if (!username || !email || !password) {
                 showMessage(registerMessage, 'error', 'Por favor, completa todos los campos.');
                 return;
