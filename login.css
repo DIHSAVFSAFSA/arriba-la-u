@@ -27,8 +27,13 @@ body {
     width: 100%;
     max-width: 400px; /* Ancho máximo para los formularios */
     text-align: center;
-    /* Inicialmente, solo mostramos el login box */
-    display: none;
+    /* Inicialmente, ambos están ocultos, el JS los mostrará */
+    display: none; /* Mantén esto */
+}
+
+/* Agrega esta regla para mostrar el login-box por defecto */
+.login-box {
+    display: block;
 }
 
 .login-box.active,
