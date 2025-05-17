@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // *** CAMBIO AQUÍ: Usando HTTPS ***
-                const targetUrlLogin = 'https://ssenatinoagaaaa.lovestoblog.com/login_user.php';
+                const targetUrlLogin = 'https://ssenatinogaaaa.lovestoblog.com/login_user.php';
                 const response = await fetch(targetUrlLogin, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 console.log('LOG: Intentando fetch a register_user.php...');
                 // *** CAMBIO AQUÍ: Usando HTTPS ***
-                const targetUrlRegister = 'https://ssenatinoagaaaa.lovestoblog.com/register_user.php';
+                const targetUrlRegister = 'https://ssenatinogaaaa.lovestoblog.com/register_user.php';
                 const response = await fetch(targetUrlRegister, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
