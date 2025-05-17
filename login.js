@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('  showRegisterLink:', showRegisterLink);
     console.log('  showLoginLink:', showLoginLink);
     console.log('  loginForm:', loginForm);
-    console.log('  registerForm:', registerForm); // ¡Este es CRÍTICO para el registro!
+    console.log('  registerForm:', registerForm);
 
     // Si algún elemento no se encuentra, verás 'null' en la consola y estas advertencias.
     if (!loginBox) console.warn('ADVERTENCIA: .login-box no encontrado.');
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (showRegisterLink) {
         showRegisterLink.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('LOG 3: Clic en "Registrarse" (enlace). Cambiando a form de registro.'); // LOG 3: ¿Se detecta el clic en el enlace?
+            console.log('LOG 3: Clic en "Registrarse" (enlace). Cambiando a form de registro.');
             if (loginBox) loginBox.style.display = 'none';
             if (registerBox) registerBox.style.display = 'block';
             if (loginMessage) loginMessage.style.display = 'none';
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (showLoginLink) {
         showLoginLink.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('LOG 4: Clic en "Logearse" (enlace). Cambiando a form de login.'); // LOG 4: ¿Se detecta el clic en el enlace?
+            console.log('LOG 4: Clic en "Logearse" (enlace). Cambiando a form de login.');
             if (registerBox) registerBox.style.display = 'none';
             if (loginBox) loginBox.style.display = 'block';
             if (loginMessage) loginMessage.style.display = 'none';
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                // CAMBIO AQUÍ: de HTTPS a HTTP
+                // *** CAMBIO AQUÍ: de HTTPS a HTTP ***
                 const response = await fetch('http://ssenatinoagaaa.lovestoblog.com/login_user.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -114,8 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            // --- PASO 3: ¿Se está ejecutando el código al hacer clic en "Registrarse"? ---
-            console.log('LOG 6: Formulario de registro ENVIADO (se llamó preventDefault).'); // ¡ESTE ES EL LOG CLAVE!
+            console.log('LOG 6: Formulario de registro ENVIADO (se llamó preventDefault).'); 
             if (registerMessage) registerMessage.style.display = 'none';
 
             const username = registerForm['register-nombre'].value;
@@ -129,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 console.log('LOG: Intentando fetch a register_user.php...'); 
-                // CAMBIO AQUÍ: de HTTPS a HTTP
+                // *** CAMBIO AQUÍ: de HTTPS a HTTP ***
                 const response = await fetch('http://ssenatinoagaaa.lovestoblog.com/register_user.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
