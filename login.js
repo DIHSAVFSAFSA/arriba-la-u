@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const response = await fetch('https://ssenatinoagaaa.lovestoblog.com/login_user.php', {
+                // CAMBIO AQUÍ: de HTTPS a HTTP
+                const response = await fetch('http://ssenatinoagaaa.lovestoblog.com/login_user.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -127,13 +128,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                console.log('LOG: Intentando fetch a register_user.php...'); // LOG antes del fetch
-                const response = await fetch('https://ssenatinoagaaa.lovestoblog.com/register_user.php', {
+                console.log('LOG: Intentando fetch a register_user.php...'); 
+                // CAMBIO AQUÍ: de HTTPS a HTTP
+                const response = await fetch('http://ssenatinoagaaa.lovestoblog.com/register_user.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, email, password })
                 });
-                console.log('LOG: Fetch a register_user.php completado.'); // LOG después del fetch
+                console.log('LOG: Fetch a register_user.php completado.'); 
 
                 const data = await response.json(); 
                 console.log('LOG: Respuesta de register_user.php:', data);
