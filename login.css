@@ -27,20 +27,23 @@ body {
     width: 100%;
     max-width: 400px; /* Ancho máximo para los formularios */
     text-align: center;
-    /* Inicialmente, ambos están ocultos, el JS los mostrará */
-    display: none; /* Mantén esto */
+    /* Por defecto, ambas están ocultas para permitir control con JS. */
+    display: none; 
 }
 
-/* Agrega esta regla para mostrar el login-box por defecto */
+/* --- ¡AJUSTE CLAVE AQUÍ! --- */
+/* Esta regla asegura que la caja de login SIEMPRE se muestre inicialmente. */
+/* Si quieres que registre el primero, cambia '.login-box' a '.register-box' */
 .login-box {
     display: block;
 }
 
+
+/* Esta regla se usa junto con el JavaScript para alternar la visibilidad entre formularios */
 .login-box.active,
 .register-box.active {
     display: block; /* Muestra el formulario activo */
 }
-
 
 h2 {
     color: #333;
