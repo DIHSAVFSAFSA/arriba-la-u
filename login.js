@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Envío del Formulario de Login (Ejemplo)
+    // Envío del Formulario de Login (mantiene fetch por ahora)
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -50,33 +50,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = loginForm['login-email'].value;
             const password = loginForm['login-password'].value;
 
-            // Validación simple
             if (!email || !password) {
                 showMessage(loginMessage, 'error', 'Por favor, introduce tu email y contraseña.');
                 return;
             }
 
             try {
-                // *** ¡IMPORTANTE! AJUSTA ESTA URL A TU SCRIPT DE LOGIN EN INFINITYFREE ***
-                const targetUrlLogin = 'https://ssenatinogaaaa.lovestoblog.com/login_user.php'; // Cambia esto si tienes un script de login
-
-                // Construir los datos como FormData, que PHP entiende en $_POST
+                const targetUrlLogin = 'https://ssenatinogaaaa.lovestoblog.com/login_user.php'; 
                 const formData = new FormData();
                 formData.append('email', email);
                 formData.append('password', password);
 
                 const response = await fetch(targetUrlLogin, {
                     method: 'POST',
-                    // NO es necesario especificar 'Content-Type' para FormData, fetch lo hace automáticamente
                     body: formData
                 });
 
-                const data = await response.json(); // Espera JSON como respuesta del servidor
+                const data = await response.json();
                 console.log('LOG: Respuesta del servidor de login:', data);
 
-                if (response.ok && data.success) { // 'response.ok' verifica códigos 200-299
+                if (response.ok && data.success) {
                     showMessage(loginMessage, 'success', 'Inicio de sesión exitoso. ¡Bienvenido!');
-                    // Aquí puedes redirigir o realizar otras acciones post-login
                 } else {
                     showMessage(loginMessage, 'error', data.message || 'Error en el inicio de sesión. Credenciales incorrectas.');
                 }
@@ -87,9 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Envío del Formulario de Registro
+    // Envío del Formulario de Registro (¡AHORA CON XMLHttpRequest!)
     if (registerForm) {
-        registerForm.addEventListener('submit', async (e) => {
+        registerForm.addEventListener('submit', (e) => { // ¡Nota: No 'async' aquí!
             e.preventDefault();
             console.log('LOG: Formulario de registro ENVIADO.');
             if (registerMessage) registerMessage.style.display = 'none';
@@ -98,52 +92,64 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = registerForm['email'].value;
             const password = registerForm['password'].value;
 
-            // Depuración: Registra los valores recogidos antes de enviar
             console.log('DEBUG - Valores recogidos por JS antes de enviar:');
             console.log('Username:', username);
             console.log('Email:', email);
             console.log('Password:', password);
 
-            // Validación simple del lado del cliente
             if (!username || !email || !password) {
                 showMessage(registerMessage, 'error', 'Por favor, completa todos los campos.');
                 return;
             }
 
-            // --- ¡CAMBIO CLAVE AQUÍ: Usamos FormData para enviar datos como un formulario real! ---
+            // --- ¡CAMBIO CLAVE AQUÍ: Usamos XMLHttpRequest! ---
+            const xhr = new XMLHttpRequest();
+            const targetUrlRegister = 'https://ssenatinogaaaa.lovestoblog.com/register_user.php'; // Tu URL PHP
+
+            xhr.open('POST', targetUrlRegister, true); // true para asíncrono
+            // No es necesario setear Content-Type si envías FormData, XHR lo maneja
+
+            // Manejar la respuesta del servidor
+            xhr.onload = function() {
+                console.log('LOG: XHR Response status:', xhr.status);
+                console.log('LOG: XHR Response text:', xhr.responseText);
+
+                if (xhr.status >= 200 && xhr.status < 300) { // HTTP OK (2xx)
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        console.log('LOG: Respuesta JSON PARSEADA por XHR:', data);
+
+                        if (data.success) {
+                            showMessage(registerMessage, 'success', 'Registro exitoso. ¡Ahora puedes iniciar sesión!');
+                            if (registerForm) registerForm.reset();
+                        } else {
+                            showMessage(registerMessage, 'error', data.message || 'Error en el registro. Inténtalo de nuevo.');
+                        }
+                    } catch (jsonError) {
+                        console.error('ERROR: No se pudo parsear la respuesta JSON del servidor (XHR). Esto es lo que se recibió:', xhr.responseText, jsonError);
+                        showMessage(registerMessage, 'error', 'Error inesperado del servidor: La respuesta no es JSON válido. Revisa la Consola.');
+                    }
+                } else { // Si el status no es 2xx (ej. 400, 500)
+                    console.error('ERROR: El servidor respondió con un error de status (XHR):', xhr.status, xhr.statusText);
+                    showMessage(registerMessage, 'error', `Error del servidor: ${xhr.status} ${xhr.statusText}.`);
+                }
+            };
+
+            // Manejar errores de red o de conexión
+            xhr.onerror = function() {
+                console.error('ERROR: Error de red o conexión durante el registro (XHR).');
+                showMessage(registerMessage, 'error', 'Ocurrió un error de red o no se pudo conectar al servidor.');
+            };
+
+            // Crear FormData (igual que antes, PHP lo entenderá)
             const formData = new FormData();
             formData.append('username', username);
             formData.append('email', email);
             formData.append('password', password);
-            // ---------------------------------------------------------------------------------
 
-            try {
-                console.log('LOG: Intentando fetch a register_user.php con FormData...');
-                // *** ¡IMPORTANTE! ASEGÚRATE QUE ESTA URL ES LA CORRECTA PARA TU script PHP en InfinityFree ***
-                const targetUrlRegister = 'https://ssenatinogaaaa.lovestoblog.com/register_user.php';
-
-                const response = await fetch(targetUrlRegister, {
-                    method: 'POST',
-                    // ¡IMPORTANTE! NO es necesario especificar 'Content-Type' para FormData.
-                    // fetch lo maneja automáticamente como 'multipart/form-data', lo cual es perfecto para $_POST.
-                    body: formData // Envía el objeto FormData directamente
-                });
-                console.log('LOG: Fetch a register_user.php completado.');
-
-                const data = await response.json(); // La respuesta de tu PHP seguirá siendo JSON
-                console.log('LOG: Respuesta de register_user.php:', data);
-
-                if (response.ok && data.success) {
-                    showMessage(registerMessage, 'success', 'Registro exitoso. ¡Ahora puedes iniciar sesión!');
-                    if (registerForm) registerForm.reset(); // Limpia el formulario
-                } else {
-                    // Muestra el mensaje de error que viene del servidor
-                    showMessage(registerMessage, 'error', data.message || 'Error en el registro. Inténtalo de nuevo.');
-                }
-            } catch (error) {
-                console.error('ERROR: Error durante el registro (catch):', error);
-                showMessage(registerMessage, 'error', 'Ocurrió un error de red o el servidor no respondió con un JSON válido. Revisa la Consola para más detalles.');
-            }
+            console.log('LOG: Enviando XHR...');
+            xhr.send(formData); // Envía los datos
+            // -----------------------------------------------------------
         });
     }
 });
