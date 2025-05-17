@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!loginForm) console.warn('ADVERTENCIA: #loginForm no encontrado.');
     if (!registerForm) console.warn('ADVERTENCIA: #registerForm no encontrado. ¡Problema potencial para el registro!');
 
-
     // Visibilidad inicial (CSS ya lo hace, JS lo refuerza)
     if (loginBox) loginBox.style.display = 'block';
     if (registerBox) registerBox.style.display = 'none';
@@ -85,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                // *** CAMBIO AQUÍ: Usando HTTP ***
+                // *** CAMBIO AQUÍ: Usando HTTPS ***
                 const targetUrlLogin = 'https://ssenatinogaaaa.lovestoblog.com/login_user.php';
                 const response = await fetch(targetUrlLogin, {
                     method: 'POST',
@@ -117,10 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             console.log('LOG 6: Formulario de registro ENVIADO (se llamó preventDefault).');
             if (registerMessage) registerMessage.style.display = 'none';
-                const username = document.getElementById('register-nombre').value;
-                const email = document.getElementById('register-email').value;
-                const password = document.getElementById('register-password').value;
-
+            
+            const username = document.getElementById('register-nombre').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
 
             // ----------------------------
             if (!username || !email || !password) {
