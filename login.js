@@ -118,14 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('LOG 6: Formulario de registro ENVIADO (se llamó preventDefault).');
             if (registerMessage) registerMessage.style.display = 'none';
 
-            const username = registerForm['register-nombre'].value;
-            const email = registerForm['register-email'].value;
-            const password = registerForm['register-password'].value;
-            // --- ¡AÑADE ESTAS LÍNEAS! ---
-            console.log('DEBUG - Valores antes de enviar:');
-            console.log('Username recogido:', username);
-            console.log('Email recogido:', email);
-            console.log('Password recogido:', password);
+            const username = document.getElementById('register-nombre').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
             // ----------------------------
             if (!username || !email || !password) {
                 showMessage(registerMessage, 'error', 'Por favor, completa todos los campos.');
